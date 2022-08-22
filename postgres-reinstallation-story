@@ -1,0 +1,25 @@
+i think i forgot the postgres database password. so thought of uninstalling and reinstalling postgres sql
+
+steps i took to uninstall
+1. go to /library/postgresSql
+2. there is an uninstaller in the folder. run it.
+3. run some commands like sudo rm /etc/postgres-reg.ini
+4. tried to kill postgres related processes using this command "sudo lsof -i :5432" followed by kill. not successful.
+5. to stop all postgres processes, this is the command that worked - brew services stop postgres
+
+5. i was getting connection refused error on reinstalling.
+6. during re-installation I was getting this error 
+"Problem running post-install step. Installation may not complete correctly The database cluster initialisation failed."
+
+7. this fixed all my problems ->
+
+
+
+Uninstall PostgresSQL and then clean /Library/PostgreSQL/ Directory.
+Open teminal and run :
+
+sudo dscl . -create /Users/postgres UserShell /bin/sh
+
+sudo dscl . -create /Users/postgres NFSHomeDirectory /Library/PostgreSQL
+
+Install PostgresSQL
