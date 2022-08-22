@@ -23,3 +23,85 @@ sudo dscl . -create /Users/postgres UserShell /bin/sh
 sudo dscl . -create /Users/postgres NFSHomeDirectory /Library/PostgreSQL
 
 Install PostgresSQL
+
+
+
+
+work log
+justinmathew@Justins-Air oneform % sudo rm /etc/postgres-reg.ini
+Password:
+justinmathew@Justins-Air / % sudo lsof -i :5432
+Password:
+COMMAND  PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+postgres 622 justinmathew    7u  IPv6 0x41b005f51d81e093      0t0  TCP localhost:postgresql (LISTEN)
+postgres 622 justinmathew    8u  IPv4 0x41b005f51d827dfb      0t0  TCP localhost:postgresql (LISTEN)
+justinmathew@Justins-Air / % sudo pkill -u postgres
+justinmathew@Justins-Air / % sudo lsof -i :5432
+COMMAND  PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+postgres 622 justinmathew    7u  IPv6 0x41b005f51d81e093      0t0  TCP localhost:postgresql (LISTEN)
+postgres 622 justinmathew    8u  IPv4 0x41b005f51d827dfb      0t0  TCP localhost:postgresql (LISTEN)
+justinmathew@Justins-Air / % kill -9 622
+justinmathew@Justins-Air / % sudo lsof -i :5432
+COMMAND    PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+postgres 15182 justinmathew    7u  IPv6 0x41b005f51d81da33      0t0  TCP localhost:postgresql (LISTEN)
+postgres 15182 justinmathew    8u  IPv4 0x41b005f52faa120b      0t0  TCP localhost:postgresql (LISTEN)
+justinmathew@Justins-Air / % pkill postgres    
+justinmathew@Justins-Air / % sudo lsof -i :5432
+COMMAND    PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+postgres 15236 justinmathew    7u  IPv6 0x41b005f530f8fa53      0t0  TCP localhost:postgresql (LISTEN)
+postgres 15236 justinmathew    8u  IPv4 0x41b005f51d827dfb      0t0  TCP localhost:postgresql (LISTEN)
+justinmathew@Justins-Air / % brew services stop postgres
+Stopping `postgresql`... (might take a while)
+==> Successfully stopped `postgresql` (label: homebrew.mxcl.postgresql)
+justinmathew@Justins-Air / % sudo lsof -i :5432         
+justinmathew@Justins-Air / % 
+justinmathew@Justins-Air / % 
+justinmathew@Justins-Air /etc % su -postgres
+su: illegal option -- p
+usage: su [-] [-flm] [login [args]]
+justinmathew@Justins-Air /etc % su - postgres
+Password:
+su: Sorry
+justinmathew@Justins-Air /etc % su - postgres
+Password:
+su: Sorry
+justinmathew@Justins-Air /etc % brew services start postgres
+==> Successfully started `postgresql` (label: homebrew.mxcl.postgresql)
+justinmathew@Justins-Air /etc % sudo lsof -i :5432          
+Password:
+COMMAND    PID         USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+postgres 16224 justinmathew    7u  IPv6 0x41b005f530f92093      0t0  TCP localhost:postgresql (LISTEN)
+postgres 16224 justinmathew    8u  IPv4 0x41b005f52fa7bdfb      0t0  TCP localhost:postgresql (LISTEN)
+justinmathew@Justins-Air /etc % cd ..
+justinmathew@Justins-Air / % psql
+psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  database "justinmathew" does not exist
+justinmathew@Justins-Air / % sudo rm /etc/postgres-reg.ini
+Password:
+justinmathew@Justins-Air / % 
+justinmathew@Justins-Air / % sudo deluser postgres
+sudo: deluser: command not found
+justinmathew@Justins-Air / % sudo rm -rf /var/lib/postgresql/
+sudo rm -rf /var/log/postgresql/
+sudo rm -rf /etc/postgresql/
+justinmathew@Justins-Air / % sudo rm -rf /var/lib/postgresql/
+justinmathew@Justins-Air / % sudo rm -rf /var/log/postgresql/
+justinmathew@Justins-Air / % sudo rm -rf /etc/postgresql/
+justinmathew@Justins-Air / % brew services stop postgres 
+Stopping `postgresql`... (might take a while)
+==> Successfully stopped `postgresql` (label: homebrew.mxcl.postgresql)
+justinmathew@Justins-Air / % 
+justinmathew@Justins-Air / % 
+justinmathew@Justins-Air / % sudo lsof -i :5432          
+justinmathew@Justins-Air / % dpkg -l | grep postgres
+zsh: command not found: dpkg
+justinmathew@Justins-Air / % sudo apt-get --purge remove postgresql\*
+sudo: apt-get: command not found
+justinmathew@Justins-Air / % userdel -f postgres
+zsh: command not found: userdel
+justinmathew@Justins-Air / % psql                                    
+psql: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: No such file or directory
+        Is the server running locally and accepting connections on that socket?
+justinmathew@Justins-Air / % sudo dscl . -create /Users/postgres UserShell /bin/sh
+Password:
+justinmathew@Justins-Air / % sudo dscl . -create /Users/postgres NFSHomeDirectory /Library/PostgreSQL
+                   
