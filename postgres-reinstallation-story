@@ -12,9 +12,6 @@ steps i took to uninstall
 "Problem running post-install step. Installation may not complete correctly The database cluster initialisation failed."
 
 7. this fixed all my problems ->
-
-
-
 Uninstall PostgresSQL and then clean /Library/PostgreSQL/ Directory.
 Open teminal and run :
 
